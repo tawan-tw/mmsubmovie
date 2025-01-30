@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>MMsub Movie</h1>
+        <nav>
+          
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search movies...">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="action">Action</option>
+                <option value="comedy">Cartoon</option>
+                <option value="horror">Horror</option>
+            </select>
+        </div>
+    </header>
+
+   
+    <section id="movies">
+        <h2>Movies</h2>
+       
+        <div class="movie-list">
+            <div class="movie" data-category="action">
+                <img src="photo/photo_2025-01-29_16-36-29.jpg" alt="Movie 1">
+                <h3>In Our Prime (2022)</h3>
+                <p>Description of Movie 1.</p>
+                <button class="trailer-btn" data-trailer="https://www.youtube.com/embed/example1">Watch Trailer</button>
+                <a href="https://www.mediafire.com/file/8i86o3fxl6vpo3e/video_2025-01-29_15-31-38.mp4/file" download class="download-btn">Download</a>
+            </div>
+            <div class="movie" data-category="action">
+                <img src="photo/photo_2025-01-29_18-22-15.jpg" alt="Movie 1">
+                <h3>Gulliver Returns (2021)</h3>
+                <p></p>
+                <button class="trailer-btn" data-trailer="https://www.youtube.com/embed/example1">Watch Trailer</button>
+                <a href="https://www.mediafire.com/file/8kkaxt8smz6aktq/video_2025-01-29_18-22-21.mp4/file" download class="download-btn">Download</a>
+            </div>
+            <div class="movie" data-category="horror">
+                <img src="photo/photo_2025-01-29_20-30-27.jpg" alt="Movie 1">
+                <h3>Moana 2</h3>
+                <p></p>
+                <button class="trailer-btn" data-trailer="https://www.youtube.com/embed/example1">Watch Trailer</button>
+                <a href="https://www.mediafire.com/file_premium/3od1gv7jnf5hnt9/%2528CM%2529_Moana.2.2024.720p.WEB.H264-Naung.mp4/file" download class="download-btn">Download</a>
+            </div>
+            
+            <div class="movie" data-category="comedy">
+                <img src="photo/photo_2025-01-28_20-55-02.jpg" alt="Movie 2">
+                <h3>Lost Flower: Eo Woo Dong (2015)</h3>
+                <p></p>
+                <button class="trailer-btn" data-trailer="https://www.youtube.com/embed/example2">Watch Trailer</button>
+                <a href="https://www.mediafire.com/file/i45devsgfz6trzi/video_2025-01-28_20-53-25.mp4/file" download class="download-btn">Download</a>
+            </div>
+            <!-- Add more movies as needed -->
+        </div>
+    </section>
+
+    <!-- Trailer Modal -->
+    <div id="trailer-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <iframe id="trailer-iframe" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p>We are a movie website dedicated to bringing you the latest in cinema.</p>
+    </section>
+
+  
+    <footer>
+        <p>&copy; 2023 My Movie Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Trailer Modal
+const modal = document.getElementById('trailer-modal');
+const trailerIframe = document.getElementById('trailer-iframe');
+const closeBtn = document.querySelector('.close-btn');
+
+document.querySelectorAll('.trailer-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const trailerLink = button.getAttribute('data-trailer');
+        trailerIframe.src = trailerLink;
+        modal.style.display = 'block';
+    });
+});
+
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+    trailerIframe.src = ''; // Stop the video when modal is closed
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+        trailerIframe.src = ''; // Stop the video when modal is closed
+    }
+});
+
+// Search and Filter
+const searchInput = document.getElementById('search-input');
+const categoryFilter = document.getElementById('category-filter');
+const movies = document.querySelectorAll('.movie');
+
+function filterMovies() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedCategory = categoryFilter.value;
+
+    movies.forEach(movie => {
+        const title = movie.querySelector('h3').textContent.toLowerCase();
+        const category = movie.getAttribute('data-category');
+
+        const matchesSearch = title.includes(searchTerm);
+        const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+
+        if (matchesSearch && matchesCategory) {
+            movie.style.display = 'block';
+        } else {
+            movie.style.display = 'none';
+        }
+    });
+}
+
+searchInput.addEventListener('input', filterMovies);
+categoryFilter.addEventListener('change', filterMovies);
+
+// Contact form submission
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Thank you for contacting us!');
+});
+    </script>
+</body>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.search-bar {
+    margin-top: 10px;
+}
+
+.search-bar input, .search-bar select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+section {
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.movie {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 40px);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.movie img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.trailer-btn, .download-btn {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 15px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.trailer-btn:hover, .download-btn:hover {
+    background-color: #555;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+iframe {
+    width: 100%;
+    height: 400px;
+}
+</style>
+</html>
